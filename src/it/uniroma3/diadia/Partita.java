@@ -24,6 +24,7 @@ public class Partita {
 		creaStanze();
 		this.finita = false;
 		this.cfu = CFU_INIZIALI;
+		this.giocatore = new Giocatore();
 	}
 
     /**
@@ -102,16 +103,19 @@ public class Partita {
 	}
 
 	public int getCfu() {
-		return this.cfu;
+		return this.giocatore.getCfu();
 	}
 
 	public void setCfu(int cfu) {
-		this.cfu = cfu;		
+		this.giocatore.setCfu(cfu);		
 	}
 
 	private Giocatore giocatore;
 	public Giocatore getGiocatore() {
 		return this.giocatore;
+	}
+	public boolean giocatoreIsVivo() {
+		return this.giocatore.getCfu()>0;
 	}
 
 }

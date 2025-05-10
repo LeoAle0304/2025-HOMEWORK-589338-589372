@@ -23,4 +23,5 @@ static final private int CFU_INIZIALI = 20;
 	public void setCfu(int cfu) {
 		this.cfu = cfu;		
 	}
+	
 }

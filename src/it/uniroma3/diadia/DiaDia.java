@@ -1,8 +1,9 @@
 package it.uniroma3.diadia;
-
+import it.uniroma3.diadia.comandi.Comando;
+import it.uniroma3.diadia.comandi.FabbricaDiComandi;
+import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
 
 import java.util.Scanner;
-
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.giocatore.Borsa;
@@ -34,9 +35,9 @@ public class DiaDia {
 	static final private String[] elencoComandi = {"vai", "aiuto", "fine","prendi","posa"};
 
 	private Partita partita;
-	private IOConsole io;
+	private IO io;
 
-	public DiaDia(IOConsole io) {
+	public DiaDia(IO io) {
 		this.partita = new Partita();
 		this.io = io;
 	}
@@ -52,6 +53,23 @@ public class DiaDia {
 		while (!processaIstruzione(istruzione));
 		scannerDiLinee.close();
 	}   
+	
+	private boolean processaIstruzione(String istruzione) {
+		Comando comandoDaEseguire;
+		FabbricaDiComandi factory = new FabbricaDiComandiFisarmonica();
+		comandoDaEseguire = factory.costruisciComando(istruzione,this.io);
+		comandoDaEseguire.esegui(this.partita);
+		if (this.partita.vinta())
+
+		this.io.mostraMessaggio("Hai vinto!");
+		if (!this.partita.giocatoreIsVivo())
+
+		this.io.mostraMessaggio("Hai esaurito i CFU...");
+
+		return this.partita.isFinita();
+	}   
+	
+	
 
 
 	/**
@@ -59,7 +77,7 @@ public class DiaDia {
 	 *
 	 * @return true se l'istruzione e' eseguita e il gioco continua, false altrimenti
 	 */
-	private boolean processaIstruzione(String istruzione) {
+	/*  private boolean processaIstruzione(String istruzione) {
 		Comando comandoDaEseguire = new Comando(istruzione);
 
 		if (comandoDaEseguire.getNome().equals("fine")) {
@@ -149,8 +167,8 @@ public class DiaDia {
 	}
 
 	public static void main(String[] argc) {
-		IOConsole io = new IOConsole();
-		DiaDia gioco = new DiaDia(io);
+		IO io = new IOConsole();
+		DiaDia gioco = new DiaDia(io); 
 		gioco.gioca();
 	}
 }
